@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Mecánica Competición - Edición Examen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .correct-anim { animation: pulseGreen 0.5s; }
+        .wrong-anim { animation: shakeRed 0.5s; }
+        
+        @keyframes pulseGreen {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); background-color: #dcfce7; }
+            100% { transform: scale(1); }
+        }
+        @keyframes shakeRed {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+        
+        /* Estilos para texto técnico y examen */
+        .tech-term { color: #1e40af; font-weight: 700; }
+        .exam-warning { border-left: 4px solid #ef4444; background-color: #fef2f2; padding: 1rem; font-style: italic; }
+        .procedure-step { margin-bottom: 0.5rem; padding-left: 1rem; border-left: 2px solid #cbd5e1; }
+        
+        /* Scroll personalizado */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-blue-900 text-white p-4 shadow-xl sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">MECÁNICA DE COMPETICIÓN</h1>
+                <p class="text-xs md:text-sm text-blue-200 font-mono">EDICIÓN EXAMEN FINAL (Teoría Completa + Test)</p>
+            </div>
+            <div class="flex gap-4 w-full md:w-auto">
+                <button onclick="switchTab('study')" id="btn-study" class="flex-1 md:flex-none px-6 py-2 rounded-lg bg-white text-blue-900 font-bold transition shadow-lg ring-2 ring-transparent focus:ring-blue-300 transform hover:scale-105">📖 Temario Completo</button>
+                <button onclick="switchTab('quiz')" id="btn-quiz" class="flex-1 md:flex-none px-6 py-2 rounded-lg bg-blue-700 text-white font-bold transition hover:bg-blue-600 shadow-lg border border-blue-500 transform hover:scale-105">📝 Test Infinito</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-4 md:p-8">
+        <div class="max-w-6xl mx-auto">
+            
+            <!-- SECCIÓN: TEMARIO (Modo Estudio Profundo) -->
+            <div id="study-section" class="fade-in space-y-6">
+                
+                <div class="bg-yellow-50 border-l-8 border-yellow-500 p-6 rounded-r-lg shadow-sm mb-8">
+                    <h2 class="text-2xl font-bold text-yellow-800 mb-2">⚠ Modo Examen: Desarrollo y Conceptos</h2>
+                    <p class="text-yellow-800">Esta sección contiene <strong>toda la materia</strong> detallada para responder preguntas largas. Memoriza los procedimientos paso a paso y las relaciones causa-efecto.</p>
+                </div>
+
+                <!-- BLOQUE 1: SUSPENSIONES Y GEOMETRÍA -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    
+                    <!-- Ficha 1: El Bastidor y Geometrías -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+                        <div class="bg-slate-100 p-4 border-b border-slate-200 font-bold text-lg flex justify-between items-center cursor-pointer" onclick="toggleCard('card1')">
+                            <span class="text-blue-900">1. El Bastidor y Geometrías (Teoría)</span>
+                            <span class="text-blue-500 text-2xl font-bold">+</span>
+                        </div>
+                        <div id="card1" class="p-6 text-slate-700 text-sm md:text-base hidden">
+                            <h4 class="font-bold text-lg text-blue-800 mb-2 border-b">Conceptos Clave (Definiciones)</h4>
+                            <ul class="list-disc pl-5 mb-4 space-y-2">
+                                <li><strong>Bastidor vs Chasis:</strong> El <span class="tech-term">Bastidor</span> es el conjunto total (chasis + subchasis + basculante + ruedas + horquilla). El <span class="tech-term">Chasis</span> es solo la estructura metálica que soporta el motor.</li>
+                                <li><strong>Distancia entre Ejes (Wheelbase):</strong> Distancia entre centros de rueda. <br><em>Larga (Custom):</em> Estable en recta. <em>Corta (GP):</em> Ágil en curva. Ajustable 20-40mm tensando cadena.</li>
+                                <li><strong>Lanzamiento (Caster):</strong> Ángulo de la horquilla con la vertical (22º-29º). <br><em>Mayor ángulo:</em> Estabilidad. <em>Menor ángulo:</em> Agilidad/Nervio.</li>
+                                <li><strong>Avance (Trail):</strong> Distancia en el suelo entre la vertical del eje de rueda y la proyección del eje de dirección (80-120mm). <strong>Es lo que da la estabilidad direccional (autocentrado).</strong></li>
+                                <li><strong>Offset:</strong> Desplazamiento de las barras respecto al eje de dirección. Cambia el avance sin tocar el ángulo del chasis.</li>
+                            </ul>
+
+                            <h4 class="font-bold text-lg text-blue-800 mb-2 border-b mt-6">Dinámica (Para preguntas de desarrollo)</h4>
+                            <div class="exam-warning text-sm">
+                                <strong>Pregunta típica:</strong> "¿Qué ocurre geométricamente al frenar?"<br>
+                                <strong>Respuesta:</strong> Al frenar, la suspensión delantera se comprime (hundimiento). Esto provoca que:
+                                <ol class="list-decimal pl-5 mt-1">
+                                    <li>El ángulo de lanzamiento se cierra (se hace más vertical).</li>
+                                    <li>El avance (trail) disminuye.</li>
+                                    <li>La distancia entre ejes se acorta.</li>
+                                </ol>
+                                <strong>Resultado:</strong> La moto se vuelve radicalmente más ágil para entrar en curva, pero menos estable.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ficha 2: Tipos de Chasis -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+                        <div class="bg-slate-100 p-4 border-b border-slate-200 font-bold text-lg flex justify-between items-center cursor-pointer" onclick="toggleCard('card2')">
+                            <span class="text-blue-900">2. Tipos de Chasis (Clasificación)</span>
+                            <span class="text-blue-500 text-2xl font-bold">+</span>
+                        </div>
+                        <div id="card2" class="p-6 text-slate-700 text-sm md:text-base hidden">
+                            <ul class="space-y-4">
+                                <li class="bg-slate-50 p-3 rounded">
+                                    <strong>Espina:</strong> Combinación de tubo y chapa estampada. Uso exclusivo en <span class="tech-term">Scooters</span>. Económico y permite diseños amplios.
+                                </li>
+                                <li class="bg-slate-50 p-3 rounded">
+                                    <strong>Simple Cuna:</strong> Un tubo baja de la dirección y pasa por debajo del motor.
+                                    <ul class="list-circle pl-5 mt-1 text-xs text-slate-500">
+                                        <li><em>Desdoblado:</em> Se divide en dos bajo el motor (Trail/Campo).</li>
+                                        <li><em>Abierto:</em> Se corta y usa el <strong>motor como elemento estructural</strong>.</li>
+                                    </ul>
+                                </li>
+                                <li class="bg-slate-50 p-3 rounded">
+                                    <strong>Doble Cuna:</strong> Dos tubos bajan desde la dirección abrazando el motor. Gran rigidez. Motos pesadas o clásicas.
+                                </li>
+                                <li class="bg-slate-50 p-3 rounded">
+                                    <strong>Multitubular (Trellis):</strong> Red de tubos soldados formando triángulos. Muy ligero, <strong>rigidez selectiva</strong> y fácil acceso mecánico. (Ej: Ducati).
+                                </li>
+                                <li class="bg-slate-50 p-3 rounded border-l-4 border-blue-500">
+                                    <strong>Doble Viga (Twin Beam):</strong> El REY de la competición. Dos vigas laterales (aluminio) abrazan el motor uniendo dirección y basculante por el camino más corto.
+                                    <br><span class="text-xs text-blue-600">Creado por Antonio Cobas (Kobas) en 1982.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Ficha 3: Suspensiones - Teoría y Ajustes -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+                        <div class="bg-slate-100 p-4 border-b border-slate-200 font-bold text-lg flex justify-between items-center cursor-pointer" onclick="toggleCard('card3')">
+                            <span class="text-blue-900">3. Suspensiones: Física y Ajustes</span>
+                            <span class="text-blue-500 text-2xl font-bold">+</span>
+                        </div>
+                        <div id="card3" class="p-6 text-slate-700 text-sm md:text-base hidden">
+                            <h4 class="font-bold text-lg text-blue-800 mb-2 border-b">Física Básica</h4>
+                            <p class="mb-2"><strong>Muelle (K):</strong> Soporta el peso. $1 N = 0,102 kgf$. Ejemplo: $K=51 N/mm$ = 5,2kg para bajar 1mm.</p>
+                            <p class="mb-4"><strong>Hidráulico:</strong> Controla la energía del muelle frenando sus oscilaciones mediante paso de aceite por válvulas.</p>
+
+                            <h4 class="font-bold text-lg text-blue-800 mb-2 border-b">Los 3 Ajustes (Memorizar Orden)</h4>
+                            <div class="bg-blue-50 p-4 rounded mb-4 text-center font-bold border border-blue-200">
+                                ORDEN DE REGLAJE: <br>1º Geometría (Alturas) &rarr; 2º Precarga (SAG) &rarr; 3º Hidráulicos
+                            </div>
+                            <ol class="list-decimal pl-5 space-y-3">
+                                <li>
+                                    <strong>PRECARGA (Preload):</strong> Carga inicial del muelle.
+                                    <br><span class="text-red-600 font-bold">¡IMPORTANTE!</span> La precarga NO endurece el muelle. Solo cambia la <strong>altura inicial</strong> (el punto de partida del recorrido).
+                                </li>
+                                <li>
+                                    <strong>COMPRESIÓN:</strong> Frena la velocidad de <strong>bajada</strong> (hundimiento).
+                                    <br><em>Exceso:</em> Suspensión dura, no copia baches, pérdida de grip.
+                                    <br><em>Defecto:</em> La moto se hunde muy rápido (topes en frenada).
+                                </li>
+                                <li>
+                                    <strong>EXTENSIÓN (Rebote/Rebound):</strong> Frena la velocidad de <strong>subida</strong> (recuperación).
+                                    <br><em>Exceso (Cerrado):</em> <strong>Empaquetamiento</strong>. La suspensión baja en el bache 1, no le da tiempo a subir, y se come el bache 2 ya comprimida. Peligrosísimo.
+                                    <br><em>Defecto (Abierto):</em> La moto rebota como un muelle (pogo stick). Inestable.
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Ficha 4: Protocolo SAG y Mantenimiento -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200">
+                        <div class="bg-slate-100 p-4 border-b border-slate-200 font-bold text-lg flex justify-between items-center cursor-pointer" onclick="toggleCard('card4')">
+                            <span class="text-blue-900">4. El SAG y Mantenimiento (Procedimientos)</span>
+                            <span class="text-blue-500 text-2xl font-bold">+</span>
+                        </div>
+                        <div id="card4" class="p-6 text-slate-700 text-sm md:text-base hidden">
+                            <h4 class="font-bold text-lg text-blue-800 mb-2 border-b">Cálculo del SAG (Static vs Rider)</h4>
+                            <p class="mb-2">Se mide la diferencia entre la suspensión extendida al aire (caballete) y apoyada en el suelo.</p>
+                            <table class="w-full text-sm text-center border mb-4">
+                                <thead class="bg-slate-200">
+                                    <tr><th class="p-1 border">Medida</th><th class="p-1 border">Delantero (Horquilla)</th><th class="p-1 border">Trasero (Amort.)</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="p-1 border text-left font-semibold">SAG Estático (Moto sola)</td>
+                                        <td class="p-1 border text-red-600 font-bold">18 - 22 mm</td>
+                                        <td class="p-1 border text-red-600 font-bold">8 - 10 mm</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-1 border text-left font-semibold">SAG Dinámico (Con piloto)</td>
+                                        <td class="p-1 border text-red-600 font-bold">20 - 25 mm</td>
+                                        <td class="p-1 border text-red-600 font-bold">25 - 30 mm</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <h4 class="font-bold text-lg text-blue-800 mb-2 border-b mt-4">Tecnologías Específicas</h4>
+                            <ul class="list-disc pl-5 space-y-2 mb-4">
+                                <li><strong>Horquilla Invertida:</strong> Botella arriba (anclada a tija), barra abajo. <br><em>Ventaja:</em> Mayor rigidez estructural y menor peso no suspendido.</li>
+                                <li><strong>Cámara de Aire (Horquilla):</strong> Actúa como muelle progresivo final. <br><em>Ley de Boyle ($P_1 \cdot V_1 = P_2 \cdot V_2$):</em> Si añades aceite (reduces aire), la presión final se dispara. Sirve para <strong>evitar topes</strong> sin cambiar el muelle.</li>
+                                <li><strong>Pro-Link (Trasero):</strong> Sistema de bieletas. Aumenta la fuerza necesaria para comprimir el amortiguador al final del recorrido (progresividad).</li>
+                                <li><strong>PDS (KTM):</strong> Anclaje directo sin bieletas. Más ligero, pero requiere amortiguador especial de doble pistón.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- BLOQUE 2: MATERIALES Y TRABAJO EN BOX -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 mt-6">
+                    <div class="bg-slate-100 p-4 border-b border-slate-200 font-bold text-lg flex justify-between items-center cursor-pointer" onclick="toggleCard('card5')">
+                        <span class="text-blue-900">5. Carrocería, Materiales y Protocolos de Box</span>
+                        <span class="text-blue-500 text-2xl font-bold">+</span>
+                    </div>
+                    <div id="card5" class="p-6 text-slate-700 text-sm md:text-base hidden">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            
+                            <!-- Columna Materiales -->
+                            <div>
+                                <h4 class="font-bold text-lg text-blue-800 mb-3 border-b">Reparación de Plásticos</h4>
+                                <p class="mb-2 italic text-sm">Vital diferenciar las dos familias:</p>
+                                
+                                <div class="space-y-4">
+                                    <div class="bg-green-50 p-3 rounded border-l-4 border-green-500">
+                                        <h5 class="font-bold text-green-800">1. Termoplásticos (Se sueldan)</h5>
+                                        <p class="text-sm">Se ablandan con calor. Se pueden soldar o disolver.</p>
+                                        <ul class="list-disc pl-4 text-sm mt-1">
+                                            <li><strong>ABS (Acrilonitrilo Butadieno Estireno):</strong> Rígido, carenados pintados. Se repara con <strong>Acetona</strong> (lo disuelve creando pasta) o soldadura.</li>
+                                            <li><strong>PP (Polipropileno):</strong> Flexible, guardabarros cross/enduro. Difícil de pegar (graso). Se repara con <strong>soldadura de aporte</strong>.</li>
+                                            <li><strong>PE (Polietileno):</strong> Depósitos gasolina. Muy resistente químicos.</li>
+                                            <li><strong>PC (Policarbonato):</strong> Transparente. Cúpulas y faros.</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="bg-red-50 p-3 rounded border-l-4 border-red-500">
+                                        <h5 class="font-bold text-red-800">2. Termoestables (NO se sueldan)</h5>
+                                        <p class="text-sm">No se funden, se queman/carbonizan con calor.</p>
+                                        <ul class="list-disc pl-4 text-sm mt-1">
+                                            <li><strong>Fibra de Vidrio + Poliéster:</strong> Artesanal. Reparación: Parches de manta + resina.</li>
+                                            <li><strong>Fibra de Carbono:</strong> Alta resistencia/peso. Requiere horno autoclave. Reparación compleja con resina epoxi.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Columna Protocolos -->
+                            <div>
+                                <h4 class="font-bold text-lg text-blue-800 mb-3 border-b">Trabajo en Competición</h4>
+                                
+                                <div class="mb-4">
+                                    <h5 class="font-bold text-slate-800">Protocolo PRE-Entrenamiento</h5>
+                                    <ul class="list-disc pl-5 text-sm space-y-1">
+                                        <li>Verificar niveles y presiones.</li>
+                                        <li>Cargar batería.</li>
+                                        <li>Calentar motor.</li>
+                                        <li><strong>Calentadores:</strong> Ponerlos 1h antes. <span class="bg-yellow-200 px-1 font-bold">Quitar 2 minutos antes de salir</span> (ni antes ni después).</li>
+                                    </ul>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h5 class="font-bold text-slate-800">Protocolo POST-Entrenamiento</h5>
+                                    <ul class="list-disc pl-5 text-sm space-y-1">
+                                        <li><strong>Leer consumo gasolina:</strong> Fundamental para calcular la carga exacta de carrera (peso mínimo).</li>
+                                        <li>Limpiar llantas (agua+jabón).</li>
+                                        <li>Revisar frenos: Limpiar pistones, <strong>lijar pastillas</strong> sobre superficie plana si están cristalizadas.</li>
+                                        <li>Limpiar y engrasar cadena.</li>
+                                        <li><strong>Purgar frenos:</strong> Extraer burbujas creadas por la ebullición del líquido.</li>
+                                        <li>Repasar pares de apriete críticos (pinzas, ejes).</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-blue-50 p-3 rounded text-sm">
+                                    <strong>Actitud:</strong> "Antes de preguntar, comprobar". Limpieza extrema (imagen patrocinadores). Quien empieza un trabajo lo termina (seguridad en aprietes).
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SECCIÓN: TEST (Quiz Aleatorio) -->
+            <div id="quiz-section" class="hidden fade-in">
+                <div class="bg-white p-6 rounded-xl shadow-xl border-t-8 border-blue-600 relative min-h-[500px]">
+                    
+                    <!-- Header del Quiz -->
+                    <div class="flex justify-between items-center mb-8 border-b pb-4">
+                        <div>
+                            <h3 class="text-2xl font-extrabold text-slate-800">Simulador de Examen</h3>
+                            <p class="text-slate-500 text-sm">Preguntas aleatorias de todo el temario</p>
+                        </div>
+                        <div class="text-lg font-bold text-blue-600 bg-blue-50 px-4 py-2 rounded-full border border-blue-200">
+                            Pregunta <span id="q-current">1</span> / <span id="q-total">10</span>
+                        </div>
+                    </div>
+
+                    <!-- Contenedor de pregunta -->
+                    <div id="question-container" class="mt-4 max-w-3xl mx-auto">
+                        <h3 id="question-text" class="text-xl md:text-2xl font-bold text-slate-800 mb-8 leading-relaxed">¿Pregunta?</h3>
+                        <div id="options-container" class="space-y-4">
+                            <!-- Opciones inyectadas por JS -->
+                        </div>
+                    </div>
+
+                    <!-- Feedback -->
+                    <div id="feedback" class="hidden mt-8 p-6 rounded-xl bg-slate-50 border-2 border-slate-200 max-w-3xl mx-auto">
+                        <div class="flex items-start gap-4">
+                            <div id="feedback-icon" class="text-4xl">💡</div>
+                            <div>
+                                <h4 id="feedback-title" class="font-bold text-xl mb-2"></h4>
+                                <p id="feedback-text" class="text-slate-700 text-lg leading-relaxed"></p>
+                            </div>
+                        </div>
+                        <button onclick="nextQuestion()" id="btn-next" class="mt-6 w-full md:w-auto bg-blue-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-700 transition shadow-lg transform hover:scale-105">Siguiente Pregunta ➜</button>
+                    </div>
+
+                    <!-- Resultados -->
+                    <div id="results" class="hidden text-center py-16">
+                        <div class="text-8xl mb-6 animate-bounce">🏁</div>
+                        <h3 class="text-4xl font-extrabold text-slate-800 mb-4">¡Examen Finalizado!</h3>
+                        <p class="text-2xl text-slate-600 mb-10">Tu nota final: <span id="score" class="font-bold text-blue-600 text-4xl">0</span> / 10</p>
+                        
+                        <div class="flex flex-col gap-4 max-w-md mx-auto">
+                            <button onclick="startNewQuiz()" class="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg transform hover:scale-105 flex items-center justify-center gap-2">
+                                <span>🔄</span> Generar Nuevo Examen Aleatorio
+                            </button>
+                            <button onclick="switchTab('study')" class="bg-white text-blue-700 border-2 border-blue-600 px-8 py-4 rounded-xl font-bold hover:bg-blue-50 transition shadow-lg">
+                                📖 Volver a Repasar Temario
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-slate-200 p-6 mt-auto text-center text-slate-500 text-sm">
+        <p class="font-bold">¡Mucha suerte en el examen del jueves!</p>
+        <p>Recuerda: 1º Geometría, 2º Muelles, 3º Hidráulicos. Termoplásticos se sueldan, Termoestables no.</p>
+    </footer>
+
+    <script>
+        // --- BANCO DE PREGUNTAS (POOL EXTENDIDO Y TÉCNICO) ---
+        // Se seleccionan 10 al azar cada vez.
+        const allQuestions = [
+            {
+                q: "En una frenada fuerte antes de una curva, la horquilla se hunde. ¿Qué ocurre exactamente con las geometrías de la moto?",
+                options: [
+                    "Disminuyen el lanzamiento, el avance (trail) y la distancia entre ejes.",
+                    "Aumentan el lanzamiento y el avance para dar estabilidad.",
+                    "La distancia entre ejes aumenta debido a la compresión.",
+                    "El centro de gravedad baja pero las geometrías no cambian."
+                ],
+                correct: 0,
+                explanation: "Al hundirse el frente, la horquilla se pone más vertical (menos ángulo/lanzamiento). Esto acerca la rueda al motor (menos distancia entre ejes) y reduce la huella en el suelo (menos avance). Todo esto hace la moto más ágil para entrar en curva."
+            },
+            {
+                q: "¿Cuál es el procedimiento correcto para reparar una grieta en un carenado de ABS?",
+                options: [
+                    "Usar una pasta hecha disolviendo trozos de ABS en acetona pura.",
+                    "Aplicar resina de poliéster y manta de fibra de vidrio.",
+                    "Calentar con pistola de calor hasta que se funda y unirlo.",
+                    "Usar pegamento de contacto universal."
+                ],
+                correct: 0,
+                explanation: "El ABS es un termoplástico que reacciona químicamente con la acetona. Al disolverlo, creas una pasta del mismo material que, al evaporarse el disolvente, suelda químicamente la grieta (soldadura en frío)."
+            },
+            {
+                q: "¿Qué función tiene la 'cámara de aire' dentro de una horquilla y cómo afecta variarla?",
+                options: [
+                    "Actúa como un muelle progresivo. Reducir la cámara (más aceite) endurece el final del recorrido.",
+                    "Sirve para refrigerar el aceite. No afecta al comportamiento.",
+                    "Aumentar la cámara de aire (menos aceite) endurece la suspensión desde el principio.",
+                    "Es un espacio para que el aceite se expanda con el calor, no se debe tocar."
+                ],
+                correct: 0,
+                explanation: "Según la Ley de Boyle, al comprimir un gas, su presión aumenta. Si dejas poco aire (cámara pequeña), al final del recorrido la presión sube muchísimo, actuando como un tope neumático suave."
+            },
+            {
+                q: "¿Cuáles son las medidas de referencia para el SAG Estático (sin piloto) en una moto de competición?",
+                options: [
+                    "Delantero: 18-22 mm / Trasero: 8-10 mm",
+                    "Delantero: 30-40 mm / Trasero: 30-40 mm",
+                    "Delantero: 10-15 mm / Trasero: 20-25 mm",
+                    "Igual delante y detrás: 25 mm."
+                ],
+                correct: 0,
+                explanation: "El SAG estático (el peso de la propia moto) debe ser de unos 20mm delante y unos 10mm detrás. Si es mayor, falta precarga; si es menor (o cero), sobra precarga."
+            },
+            {
+                q: "¿Qué es el 'Empaquetamiento' de la suspensión y por qué ocurre?",
+                options: [
+                    "Es cuando la suspensión se queda hundida porque la extensión (rebote) está demasiado cerrada (lenta).",
+                    "Es cuando hacemos tope de compresión en una frenada.",
+                    "Es un fallo de los retenes que hace que se salga el aceite.",
+                    "Es cuando el muelle es demasiado duro y la moto no baja."
+                ],
+                correct: 0,
+                explanation: "Si el rebote es muy lento, la suspensión baja en el primer bache pero no le da tiempo a subir antes del segundo. En el segundo bache ya está comprimida, perdiendo recorrido útil. Se va 'empaquetando' abajo."
+            },
+            {
+                q: "¿Cuál es la principal ventaja del chasis 'Doble Viga' (Twin Beam) de aluminio?",
+                options: [
+                    "Une la dirección y el basculante por el camino más corto, ofreciendo gran rigidez y ligereza.",
+                    "Es el más barato de fabricar.",
+                    "Permite que el motor vibre libremente sin transmitirlo al piloto.",
+                    "Es muy flexible, lo que ayuda en terrenos de motocross."
+                ],
+                correct: 0,
+                explanation: "Diseñado por Antonio Cobas, este chasis rodea el motor con dos vigas rectas. Es la estructura más eficiente para soportar las fuerzas de frenada y aceleración en asfalto."
+            },
+            {
+                q: "En el mantenimiento Post-Entreno, ¿por qué es crítico limpiar los pistones de freno antes de empujarlos?",
+                options: [
+                    "Para no introducir suciedad (ferodo) dentro de los retenes y dañar el sellado.",
+                    "Para que frenen más en la siguiente tanda.",
+                    "Por estética, para que se vean brillantes.",
+                    "No es necesario limpiarlos, se limpian solos al frenar."
+                ],
+                correct: 0,
+                explanation: "Los pistones acumulan polvo de pastilla (ferodo). Si los empujas hacia adentro sucios al cambiar pastillas, esa suciedad daña los retenes y guardapolvos, provocando fugas o pistones gripados."
+            },
+            {
+                q: "¿Qué es el sistema PDS de suspensión trasera?",
+                options: [
+                    "Un sistema de amortiguador anclado directamente al basculante sin bieletas.",
+                    "Un sistema de bieletas progresivas bajo el basculante.",
+                    "Un tipo de horquilla delantera de aire.",
+                    "Un sistema electrónico de control de tracción."
+                ],
+                correct: 0,
+                explanation: "PDS (Progressive Damping System) es típico de KTM. Elimina las bieletas (ahorro de peso/mantenimiento) pero requiere un amortiguador especial (doble pistón) para conseguir progresividad interna."
+            },
+            {
+                q: "¿Qué diferencia un material Termoestable de un Termoplástico a la hora de repararlo?",
+                options: [
+                    "El Termoestable NO se puede soldar (se quema), el Termoplástico SÍ se funde.",
+                    "El Termoestable es más barato.",
+                    "El Termoplástico requiere resina y fibra, el Termoestable acetona.",
+                    "No hay diferencia, todos los plásticos se sueldan."
+                ],
+                correct: 0,
+                explanation: "Clave para examen: Termoplásticos (ABS, PP) = Calor/Disolvente. Termoestables (Fibra, Resina) = Parche mecánico + Resina (no funden)."
+            },
+            {
+                q: "Si la moto tiene 'Shimmy' (sacudidas de dirección) al acelerar fuerte, ¿cuál suele ser la causa geométrica?",
+                options: [
+                    "Falta de peso en el tren delantero (la rueda flota) o extensión muy rápida.",
+                    "Exceso de peso delante.",
+                    "Muelle trasero demasiado blando.",
+                    "Presión de neumáticos muy alta."
+                ],
+                correct: 0,
+                explanation: "Al acelerar, el peso se va atrás. Si la moto está muy alta de delante o el rebote es muy rápido, la rueda delantera pierde contacto firme y oscila."
+            },
+            {
+                q: "¿Qué orden se debe seguir OBLIGATORIAMENTE al poner a punto una moto?",
+                options: [
+                    "1. Geometrías, 2. Muelles (SAG), 3. Hidráulicos.",
+                    "1. Hidráulicos, 2. Muelles, 3. Geometrías.",
+                    "1. Muelles, 2. Hidráulicos, 3. Geometrías.",
+                    "Empezar por lo que el piloto sienta peor."
+                ],
+                correct: 0,
+                explanation: "Regla de oro: Primero pones la moto en su sitio (alturas/geometría). Luego ajustas para el peso (muelles). Finalmente controlas el movimiento (hidráulicos)."
+            },
+            {
+                q: "¿Para qué sirve el gas Nitrógeno en la 'mochila' o botella separada del amortiguador?",
+                options: [
+                    "Para presurizar el aceite y evitar la cavitación (burbujas).",
+                    "Para enfriar el sistema.",
+                    "Para lubricar el vástago.",
+                    "Para endurecer el muelle en los saltos."
+                ],
+                correct: 0,
+                explanation: "Evita que el aceite hierva o cree burbujas (cavitación) cuando el pistón se mueve muy rápido, manteniendo la consistencia de la amortiguación."
+            },
+            {
+                q: "Si una moto tiene tendencia al 'Subviraje' (se va de morro/abre la trayectoria), ¿cuál puede ser una causa?",
+                options: [
+                    "La moto está muy alta de delante (poca carga frontal).",
+                    "La moto está muy baja de delante.",
+                    "El muelle trasero es demasiado duro.",
+                    "El piloto está muy adelantado."
+                ],
+                correct: 0,
+                explanation: "Si el morro está alto (chopper), la horquilla está muy lanzada y tiene mucho avance. Esto da estabilidad pero la moto se resiste a girar y tiende a irse recta (subviraje)."
+            },
+            {
+                q: "¿Qué material se usa en los depósitos de gasolina de motos modernas y por qué?",
+                options: [
+                    "Polietileno (PE) por su resistencia a químicos e impactos.",
+                    "ABS por su facilidad de pintado.",
+                    "Fibra de vidrio por su ligereza.",
+                    "PVC por ser barato."
+                ],
+                correct: 0,
+                explanation: "El Polietileno (PE) es el estándar para depósitos plásticos (Acerbis, etc.) porque soporta la gasolina sin degradarse y es muy tenaz ante golpes."
+            },
+            {
+                q: "En el protocolo de box, ¿cuándo se deben quitar los calentadores?",
+                options: [
+                    "Aproximadamente 2 minutos antes de salir a pista.",
+                    "10 minutos antes.",
+                    "Justo en el momento de arrancar el motor.",
+                    "Cuando el piloto se sube a la moto."
+                ],
+                correct: 0,
+                explanation: "2 minutos es el estándar: da tiempo a bajar la moto del caballete y salir sin que la goma pierda temperatura crítica."
+            }
+        ];
+
+        // --- ESTADO DE LA APP ---
+        let currentTab = 'study';
+        let quizQuestions = []; 
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let questionAnswered = false;
+
+        // --- FUNCIONES ---
+
+        // Barajar array (Fisher-Yates)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Iniciar un nuevo Quiz
+        function startNewQuiz() {
+            const shuffledPool = shuffleArray([...allQuestions]);
+            quizQuestions = shuffledPool.slice(0, 10);
+            
+            currentQuestionIndex = 0;
+            score = 0;
+            questionAnswered = false;
+            
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('question-container').classList.remove('hidden');
+            document.getElementById('feedback').classList.add('hidden');
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= quizQuestions.length) {
+                showResults();
+                return;
+            }
+
+            const qData = quizQuestions[currentQuestionIndex];
+            
+            // Barajar opciones
+            let currentOptions = qData.options.map((opt, i) => ({
+                text: opt,
+                isCorrect: i === qData.correct,
+                originalIndex: i
+            }));
+            currentOptions = shuffleArray(currentOptions);
+
+            // UI Update
+            document.getElementById('q-current').textContent = currentQuestionIndex + 1;
+            document.getElementById('question-text').textContent = qData.q;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            currentOptions.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-blue-400 hover:bg-blue-50 transition flex items-center group bg-white shadow-sm";
+                btn.onclick = () => checkAnswer(opt, btn, currentOptions, qData.explanation);
+                btn.innerHTML = `
+                    <span class="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center mr-4 font-bold group-hover:bg-blue-200 transition shrink-0 border border-slate-300 text-lg">${String.fromCharCode(65+index)}</span>
+                    <span class="flex-1 font-medium text-slate-700 text-lg">${opt.text}</span>
+                `;
+                opt.btnElement = btn;
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById('feedback').classList.add('hidden');
+            questionAnswered = false;
+        }
+
+        function checkAnswer(selectedOption, btnElement, allOptions, explanation) {
+            if (questionAnswered) return;
+            questionAnswered = true;
+
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackText = document.getElementById('feedback-text');
+            const feedbackDiv = document.getElementById('feedback');
+            const feedbackIcon = document.getElementById('feedback-icon');
+
+            allOptions.forEach(opt => {
+                opt.btnElement.disabled = true;
+                opt.btnElement.classList.add('opacity-50', 'cursor-not-allowed');
+                if (opt.isCorrect) {
+                    opt.btnElement.classList.remove('border-slate-200', 'opacity-50');
+                    opt.btnElement.classList.add('border-green-500', 'bg-green-100', 'ring-2', 'ring-green-300');
+                    opt.btnElement.querySelector('span:first-child').classList.add('bg-green-600', 'text-white', 'border-transparent');
+                }
+            });
+
+            if (selectedOption.isCorrect) {
+                score++;
+                feedbackTitle.textContent = "¡Respuesta Correcta!";
+                feedbackTitle.className = "font-bold text-2xl mb-1 text-green-700";
+                feedbackDiv.className = "mt-8 p-6 rounded-xl bg-green-50 border-2 border-green-200 fade-in max-w-3xl mx-auto shadow-md";
+                feedbackIcon.textContent = "✅";
+                btnElement.classList.add('correct-anim');
+            } else {
+                btnElement.classList.remove('border-slate-200', 'opacity-50');
+                btnElement.classList.add('border-red-500', 'bg-red-100', 'wrong-anim');
+                btnElement.querySelector('span:first-child').classList.add('bg-red-600', 'text-white', 'border-transparent');
+
+                feedbackTitle.textContent = "Respuesta Incorrecta";
+                feedbackTitle.className = "font-bold text-2xl mb-1 text-red-700";
+                feedbackDiv.className = "mt-8 p-6 rounded-xl bg-red-50 border-2 border-red-200 fade-in max-w-3xl mx-auto shadow-md";
+                feedbackIcon.textContent = "❌";
+            }
+
+            feedbackText.innerHTML = `<strong class="block mb-2 text-slate-900">Explicación Técnica:</strong>${explanation}`;
+            feedbackDiv.classList.remove('hidden');
+            
+            if(window.innerWidth < 768) {
+                feedbackDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function showResults() {
+            document.getElementById('question-container').classList.add('hidden');
+            document.getElementById('feedback').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+            
+            const scoreElement = document.getElementById('score');
+            scoreElement.textContent = `${score}`;
+            
+            if (score >= 9) scoreElement.className = "font-bold text-green-600 text-6xl";
+            else if (score >= 5) scoreElement.className = "font-bold text-yellow-600 text-6xl";
+            else scoreElement.className = "font-bold text-red-600 text-6xl";
+        }
+
+        function startNewQuizWrapper() {
+            startNewQuiz();
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            const studySec = document.getElementById('study-section');
+            const quizSec = document.getElementById('quiz-section');
+            const btnStudy = document.getElementById('btn-study');
+            const btnQuiz = document.getElementById('btn-quiz');
+
+            if (tab === 'study') {
+                studySec.classList.remove('hidden');
+                quizSec.classList.add('hidden');
+                btnStudy.className = "flex-1 md:flex-none px-6 py-2 rounded-lg bg-white text-blue-900 font-bold transition shadow-lg ring-2 ring-blue-300 transform scale-105";
+                btnQuiz.className = "flex-1 md:flex-none px-6 py-2 rounded-lg bg-blue-700 text-white font-bold transition hover:bg-blue-600 shadow-lg border border-blue-500 opacity-90";
+            } else {
+                studySec.classList.add('hidden');
+                quizSec.classList.remove('hidden');
+                btnStudy.className = "flex-1 md:flex-none px-6 py-2 rounded-lg bg-blue-700 text-white font-bold transition hover:bg-blue-600 shadow-lg border border-blue-500 opacity-90";
+                btnQuiz.className = "flex-1 md:flex-none px-6 py-2 rounded-lg bg-white text-blue-900 font-bold transition shadow-lg ring-2 ring-blue-300 transform scale-105";
+                
+                if (quizQuestions.length === 0) startNewQuiz();
+            }
+        }
+
+        function toggleCard(id) {
+            const content = document.getElementById(id);
+            const btn = content.previousElementSibling;
+            const icon = btn.querySelector('span:last-child');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.textContent = '-';
+            } else {
+                content.classList.add('hidden');
+                icon.textContent = '+';
+            }
+        }
+    </script>
+</body>
+</html>
